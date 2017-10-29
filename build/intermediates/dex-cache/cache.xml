@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.3.1_dbbf84f27c2f5b6ee80c9b7c403c14c42f748ca3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.3.1_770dcf31c8e071a5e32b3c47eeb0033e4b82ccaa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/picasso-2.5.2_ecbf0990f0f9325f68c5fcb1201234dedeeae726.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.3.1_15daf14ecf72f8f508889670ce40d156df474d6a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_7a71b2dd67377912609cda7bbbce9642db19b506.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.3.1_dec2157cf4baa3e047b587abbc0b8f1f70463e78.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.3.1_fb37c86e76374da2b5acbd856c5c2f3c2b3b8e7a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.3.1_62748b8d337ea05ba59b553861ba91c8958d26de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.3.1_1c2ba77863cc392413ab38f21e8083dc1bd48d54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.3.1_12358164768ab85f66a97ddcfc4cc29f83c6dc26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.3.1_459f9a430b05b56d3cf398a9a2a57b6024b0a8a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.3.1_260adcb36068809fd32d5d3dfe87733f3c855dc5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-25.3.1_942dcb0ba6094bda489291845e3a621ef6007c0f.jar" />
+    </item>
+
+</items>

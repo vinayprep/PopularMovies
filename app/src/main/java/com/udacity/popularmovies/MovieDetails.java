@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.SimpleDateFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,9 +37,9 @@ import java.util.Arrays;
 import java.util.Date;
 
 import utils.FavoriteContract;
-import utils.FavoritesDbHelper;
 import utils.NetworkUtils;
 
+import static utils.FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
 import static utils.NetworkUtils.API_KEY_VALUE;
 import static utils.NetworkUtils.PARAM_API_KEY;
 
@@ -70,8 +69,6 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     RecyclerView trailers;
     String[] columnName = new String[1];
     String[] columnValue = new String[1];
-    int columnId = 0;
-    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,14 +158,13 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
         favoriteBtn.setOnClickListener(this);
         removeFromBtn.setOnClickListener(this);
 
-        columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
+        columnName[0] = COLUMN_MOVIE_ID;
         columnValue[0] = id;
-        FavoritesDbHelper dbHelper = FavoritesDbHelper.getInstance(this);
-        mDb = dbHelper.getWritableDatabase();
         Cursor cursor = getAllFavorites();
-        if (cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
-            String movieId = cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID));
+            String movieId = cursor.getString(cursor.getColumnIndex(COLUMN_MOVIE_ID));
+//            long _id = cursor.getLong(cursor.getColumnIndex(FavoriteContract.FavoriteEntry._ID));
             if (id.equals(movieId)) {
                 removeFromBtn.setVisibility(View.VISIBLE);
                 favoriteBtn.setVisibility(View.GONE);
@@ -181,25 +177,28 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private Cursor getAllFavorites() {
-        return mDb.query(
-                FavoriteContract.FavoriteEntry.TABLE_NAME,
+        return getContentResolver().query(
+                FavoriteContract.FavoriteEntry.CONTENT_URI,
                 columnName,
-                FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID + "=?",
+                COLUMN_MOVIE_ID + "=?",
                 columnValue,
-                null,
-                null,
                 FavoriteContract.FavoriteEntry.COLUMN_CREATION_DATE
         );
     }
 
-    private long addToFavorites() {
+    private void addToFavorites() {
         ContentValues cv = new ContentValues();
-        cv.put(FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID, id);
-        return mDb.insert(FavoriteContract.FavoriteEntry.TABLE_NAME, null, cv);
+        cv.put(COLUMN_MOVIE_ID, id);
+        Uri uri = getContentResolver().insert(FavoriteContract.FavoriteEntry.CONTENT_URI, cv);
+        return;
     }
 
-    private boolean removeFromFavorites(String movieId) {
-        return mDb.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID + "=" + movieId, null) > 0;
+    private boolean removeFromFavorites(String[] movieId) {
+        Uri uri = FavoriteContract.FavoriteEntry.CONTENT_URI;
+        uri = uri.buildUpon().build();
+        getContentResolver().delete(uri, COLUMN_MOVIE_ID, movieId);
+        Log.d("ADebugTag", "uri..................." + uri.toString());
+        return true;
     }
 
     @Override
@@ -318,7 +317,9 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
                 addToFavorites();
                 break;
             case R.id.remove_from_fav_btn:
-                removeFromFavorites(id);
+                String[] movieId = new String[1];
+                movieId[0] = id;
+                removeFromFavorites(movieId);
                 break;
         }
         Intent intent = new Intent(this, MovieDetails.class);

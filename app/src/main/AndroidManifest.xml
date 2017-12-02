@@ -21,6 +21,12 @@
         <activity
             android:name=".MovieDetails"
             android:parentActivityName=".MainActivity"></activity>
+
+
+        <provider
+            android:name="utils.FavoriteContentProvider"
+            android:authorities="com.udacity.popularmovies"
+            android:exported="false" />
     </application>
 
 </manifest>

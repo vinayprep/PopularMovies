@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:2:1-26:12
+ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:2:1-32:12
 	package
 		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:3:5-40
 		INJECTED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml
@@ -22,7 +22,7 @@ ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03
 	android:name
 		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:6:22-76
 application
-ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:8:5-24:19
+ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:8:5-30:19
 MERGED from [com.android.support:appcompat-v7:25.3.1] /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:support-v4:25.3.1] /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:support-fragment:25.3.1] /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/AndroidManifest.xml:29:5-20
@@ -63,6 +63,14 @@ ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03
 		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:23:13-55
 	android:name
 		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:22:13-41
+provider#utils.FavoriteContentProvider
+ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:26:9-29:39
+	android:authorities
+		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:28:13-60
+	android:exported
+		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:29:13-37
+	android:name
+		ADDED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml:27:13-57
 uses-sdk
 INJECTED from /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:25.3.1] /Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/AndroidManifest.xml:21:5-23:78

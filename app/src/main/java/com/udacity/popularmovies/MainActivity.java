@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(4.0f);
         movies = (RecyclerView) findViewById(R.id.main_recycler_view);
         movieAdapter = new MovieAdapter(this);
-        movies.setHasFixedSize(false);
+        movies.setHasFixedSize(true);
         movies.setAdapter(movieAdapter);
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -75,27 +76,24 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_LONG).show();
         }
 
+
         columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
         FavoritesDbHelper dbHelper = FavoritesDbHelper.getInstance(this);
         mDb = dbHelper.getWritableDatabase();
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(SCROLL_POSITION)) {
                 scrollPos = Integer.parseInt(savedInstanceState.getString(SCROLL_POSITION));
-                layoutManager.scrollToPosition(scrollPos);
-                Log.d("ADebugTag", "scrollPos.." + scrollPos);
-                movieAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void onItemRangeInserted(int positionStart, int itemCount) {
-                        super.onItemRangeInserted(positionStart, itemCount);
-                        int count = movieAdapter.getItemCount();
-                        movies.scrollToPosition(scrollPos);
-                        Log.d("ADebugTag", "scrollPos.." + scrollPos);
-
+                    public void run() {
+                        movies.getLayoutManager().scrollToPosition(scrollPos);
                     }
-                });
+                }, 200);
+                Log.d("ADebugTag", "scrollPos..................." + scrollPos);
             }
         }
     }
+
 
     public boolean isOnline() {
         ConnectivityManager cm =
@@ -157,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putString(SCROLL_POSITION, String.valueOf(into[0]));
         recyclerViewState = layoutManager.onSaveInstanceState();//save
         outState.putParcelable("statekey", recyclerViewState);
-        Log.d("ADebugTag", "SCROLL11.." + SCROLL_POSITION);
     }
 
     @Override
@@ -180,13 +177,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Cursor getAllFavorites() {
-        return mDb.query(
-                FavoriteContract.FavoriteEntry.TABLE_NAME,
+        return getContentResolver().query(
+                FavoriteContract.FavoriteEntry.CONTENT_URI,
                 columnName,
                 FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID + "=?",
                 columnValue,
-                null,
-                null,
                 FavoriteContract.FavoriteEntry.COLUMN_CREATION_DATE
         );
     }

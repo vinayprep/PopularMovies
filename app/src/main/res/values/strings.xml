@@ -3,4 +3,9 @@
     <string name="sort">Sort By</string>
     <string name="popular">Popularity</string>
     <string name="top_rated">Top Rated</string>
+    <string name="trailers">Trailers: </string>
+    <string name="mark_as_favorite">MARK AS FAVORITE</string>
+    <string name="remove_from_favorites">REMOVE FROM FAVORITES</string>
+    <string name="favorites">Favorites</string>
+    <string name="reviews">Reviews</string>
 </resources>

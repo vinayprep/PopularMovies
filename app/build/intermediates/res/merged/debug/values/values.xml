@@ -363,11 +363,16 @@
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="app_name">Popular Movies</string>
+    <string name="favorites">Favorites</string>
+    <string name="mark_as_favorite">MARK AS FAVORITE</string>
     <string name="popular">Popularity</string>
+    <string name="remove_from_favorites">REMOVE FROM FAVORITES</string>
+    <string name="reviews">Reviews</string>
     <string name="search_menu_title">Search</string>
     <string name="sort">Sort By</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="top_rated">Top Rated</string>
+    <string name="trailers">Trailers: </string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>

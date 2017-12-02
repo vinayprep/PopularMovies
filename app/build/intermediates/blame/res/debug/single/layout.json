@@ -12,6 +12,10 @@
         "source": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/res/layout/abc_action_bar_title_item.xml"
     },
     {
+        "merged": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/res/merged/debug/layout/all_trailers.xml",
+        "source": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/res/layout/all_trailers.xml"
+    },
+    {
         "merged": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/res/merged/debug/layout/activity_movie_details.xml",
         "source": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/res/layout/activity_movie_details.xml"
     },
@@ -58,6 +62,10 @@
     {
         "merged": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
         "source": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/res/layout/abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/res/merged/debug/layout/all_reviews.xml",
+        "source": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/src/main/res/layout/all_reviews.xml"
     },
     {
         "merged": "/Users/vinaygharge/Desktop/Workspace/ud851-Exercises-student/Lesson03-Green-Recycler-View/PopularMovies/app/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",

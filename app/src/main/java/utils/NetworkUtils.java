@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import com.udacity.popularmovies.BuildConfig;
 import com.udacity.popularmovies.Movies;
+import com.udacity.popularmovies.Reviews;
+import com.udacity.popularmovies.Trailers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +32,9 @@ public class NetworkUtils {
     public static String IMAGE_SIZE = "w185/";
     public static String POPULAR_TEXT = "POPULAR";
     public static String TOP_RATED_TEXT = "TOP_RATED";
+    public static String FAVORITES_TEXT = "FAVORITES";
+    public static String MOVIE_TRAILERS = "/movie/{id}/videos";
+    public static String MOVIE_REVIEWS = "/movie/{id}/reviews";
 
 
     public static String PARAM_API_KEY = "api_key";
@@ -86,5 +91,43 @@ public class NetworkUtils {
             movies[i].setRelease_date(jsonobject.getString("release_date"));
         }
         return movies;
+    }
+
+    public static Trailers[] getMovieTrailers(String movieTrailers) throws JSONException {
+        JSONObject jsonObject = new JSONObject(movieTrailers);
+        String results = jsonObject.getString("results");
+        JSONArray result = new JSONArray(results);
+        Trailers[] trailers = new Trailers[result.length()];
+        for (int i = 0; i < result.length(); i++) {
+            JSONObject jsonobject = result.getJSONObject(i);
+            trailers[i] = new Trailers();
+            trailers[i].setId(jsonobject.getString("id"));
+            trailers[i].setIso_639_1(jsonobject.getString("iso_639_1"));
+            trailers[i].setIso_3166_1(jsonobject.getString("iso_3166_1"));
+            trailers[i].setKey(jsonobject.getString("key"));
+            trailers[i].setName(jsonobject.getString("name"));
+            trailers[i].setSite(jsonobject.getString("site"));
+            trailers[i].setSize(jsonobject.getString("size"));
+            trailers[i].setType(jsonobject.getString("type"));
+        }
+        return trailers;
+
+    }
+
+    public static Reviews[] getMovieReviews(String movieReviews) throws JSONException {
+        JSONObject jsonObject = new JSONObject(movieReviews);
+        String results = jsonObject.getString("results");
+        JSONArray result = new JSONArray(results);
+        Reviews[] reviews = new Reviews[result.length()];
+        for (int i = 0; i < result.length(); i++) {
+            JSONObject jsonobject = result.getJSONObject(i);
+            reviews[i] = new Reviews();
+            reviews[i].setId(jsonobject.getString("id"));
+            reviews[i].setAuthor(jsonobject.getString("author"));
+            reviews[i].setContent(jsonobject.getString("content"));
+            reviews[i].setUrl(jsonobject.getString("url"));
+        }
+        return reviews;
+
     }
 }

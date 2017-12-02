@@ -2,6 +2,8 @@ package com.udacity.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -21,13 +23,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import utils.FavoriteContract;
+import utils.FavoritesDbHelper;
 import utils.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     MovieAdapter movieAdapter;
     ArrayList<Movies> mModel;
+    ArrayList<Movies> mModelTemp;
     RecyclerView movies;
+    String[] columnName = new String[1];
+    String[] columnValue;
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         movies.setLayoutManager(layoutManager);
         mModel = new ArrayList<>();
+        mModelTemp = new ArrayList<>();
         if (isOnline()) {
             if (NetworkUtils.POPULAR_TEXT.equals(getIntent().getStringExtra("sortBy")) ||
                     getIntent().getStringExtra("sortBy") == null ||
@@ -51,10 +60,17 @@ public class MainActivity extends AppCompatActivity {
             } else if (NetworkUtils.TOP_RATED_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
                 URL url = NetworkUtils.generateURL(NetworkUtils.TOP_RATED_TEXT);
                 new MainAsyncClass().execute(url);
+            } else if (NetworkUtils.FAVORITES_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
+                URL url = NetworkUtils.generateURL(NetworkUtils.POPULAR_TEXT);
+                new MainAsyncClass().execute(url);
             }
         } else {
             Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_LONG).show();
         }
+
+        columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
+        FavoritesDbHelper dbHelper = new FavoritesDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
     }
 
     public boolean isOnline() {
@@ -87,6 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentTR);
                 finish();
                 return true;
+            case R.id.favorites:
+                Intent intentFV = new Intent(this, MainActivity.class);
+                intentFV.putExtra("sortBy", NetworkUtils.FAVORITES_TEXT);
+                startActivity(intentFV);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -99,7 +121,20 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("overview", movies.getOverview());
         intent.putExtra("vote_average", movies.getVote_average());
         intent.putExtra("release_date", movies.getRelease_date());
+        intent.putExtra("id", movies.getId());
         startActivity(intent);
+    }
+
+    private Cursor getAllFavorites() {
+        return mDb.query(
+                FavoriteContract.FavoriteEntry.TABLE_NAME,
+                columnName,
+                FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID + "=?",
+                columnValue,
+                null,
+                null,
+                FavoriteContract.FavoriteEntry.COLUMN_CREATION_DATE
+        );
     }
 
     class MainAsyncClass extends AsyncTask<URL, Void, ArrayList<Movies>> {
@@ -113,6 +148,25 @@ public class MainActivity extends AppCompatActivity {
             }
             try {
                 mModel.addAll(Arrays.asList(NetworkUtils.getPosterImage(response)));
+
+                if (NetworkUtils.FAVORITES_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
+                    mModelTemp.clear();
+                    columnValue = new String[1];
+                    String movieId = null;
+                    for (int i = 0; i < mModel.size(); i++) {
+                        columnValue[0] = mModel.get(i).getId();
+                        Cursor cursor = getAllFavorites();
+                        if (cursor.getCount() > 0) {
+                            cursor.moveToFirst();
+                            movieId = cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID));
+                        }
+                        if (mModel.get(i).getId().equals(movieId)) {
+                            mModelTemp.add(mModel.get(i));
+                        }
+                    }
+                    mModel.clear();
+                    mModel = mModelTemp;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

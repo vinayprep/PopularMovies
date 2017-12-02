@@ -81,6 +81,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Movie Details");
         getSupportActionBar().setElevation(4.0f);
+
         poster_path = getIntent().getStringExtra("poster_path");
         original_title = getIntent().getStringExtra("original_title");
         overview = getIntent().getStringExtra("overview");
@@ -162,7 +163,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
 
         columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
         columnValue[0] = id;
-        FavoritesDbHelper dbHelper = new FavoritesDbHelper(this);
+        FavoritesDbHelper dbHelper = FavoritesDbHelper.getInstance(this);
         mDb = dbHelper.getWritableDatabase();
         Cursor cursor = getAllFavorites();
         if (cursor.getCount() > 0) {

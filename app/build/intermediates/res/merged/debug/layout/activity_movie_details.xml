@@ -72,9 +72,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/mark_as_favorite"
                     android:background="#009688"
-                    android:textColor="#FFFFFF"/>
+                    android:text="@string/mark_as_favorite"
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/remove_from_fav_btn"
@@ -83,10 +83,10 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/remove_from_favorites"
                     android:background="#009688"
+                    android:text="@string/remove_from_favorites"
                     android:textColor="#FFFFFF"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -113,9 +113,9 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp"
+            android:text="@string/trailers"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:text="@string/trailers" />
+            android:textSize="18sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/trailers_recycler_view"
@@ -124,6 +124,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -137,9 +138,9 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp"
+            android:text="@string/reviews"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:text="@string/reviews" />
+            android:textSize="18sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reviews_recycler_view"

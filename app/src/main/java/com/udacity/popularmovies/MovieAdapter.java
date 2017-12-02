@@ -2,7 +2,6 @@ package com.udacity.popularmovies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Picasso.with(context).load(path.get(position).getPoster_path()).fit().into(holder.imageView);
-        Log.d("ADebugTag", "hello.." + path.get(position));
     }
 
     @Override

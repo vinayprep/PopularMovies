@@ -8,9 +8,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,13 +31,18 @@ import utils.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String SCROLL_POSITION = "scroll";
+    private static final String SORTING = "sorting";
     MovieAdapter movieAdapter;
     ArrayList<Movies> mModel;
     ArrayList<Movies> mModelTemp;
     RecyclerView movies;
     String[] columnName = new String[1];
     String[] columnValue;
+    StaggeredGridLayoutManager layoutManager;
+    int scrollPos = 0;
     private SQLiteDatabase mDb;
+    private Parcelable recyclerViewState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter(this);
         movies.setHasFixedSize(false);
         movies.setAdapter(movieAdapter);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         movies.setLayoutManager(layoutManager);
         mModel = new ArrayList<>();
@@ -69,8 +76,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
-        FavoritesDbHelper dbHelper = new FavoritesDbHelper(this);
+        FavoritesDbHelper dbHelper = FavoritesDbHelper.getInstance(this);
         mDb = dbHelper.getWritableDatabase();
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SCROLL_POSITION)) {
+                scrollPos = Integer.parseInt(savedInstanceState.getString(SCROLL_POSITION));
+                layoutManager.scrollToPosition(scrollPos);
+                Log.d("ADebugTag", "scrollPos.." + scrollPos);
+                movieAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                    @Override
+                    public void onItemRangeInserted(int positionStart, int itemCount) {
+                        super.onItemRangeInserted(positionStart, itemCount);
+                        int count = movieAdapter.getItemCount();
+                        movies.scrollToPosition(scrollPos);
+                        Log.d("ADebugTag", "scrollPos.." + scrollPos);
+
+                    }
+                });
+            }
+        }
     }
 
     public boolean isOnline() {
@@ -123,6 +147,36 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("release_date", movies.getRelease_date());
         intent.putExtra("id", movies.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int into[] = new int[2];
+        layoutManager.findFirstVisibleItemPositions(into);
+        outState.putString(SCROLL_POSITION, String.valueOf(into[0]));
+        recyclerViewState = layoutManager.onSaveInstanceState();//save
+        outState.putParcelable("statekey", recyclerViewState);
+        Log.d("ADebugTag", "SCROLL11.." + SCROLL_POSITION);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            recyclerViewState = savedInstanceState.getParcelable("statekey");
+        }
+    }
+
+    //
+//
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (recyclerViewState != null) {
+            layoutManager.onRestoreInstanceState(recyclerViewState);
+        }
+        Log.d("ADebugTag", "SCROLL..");
     }
 
     private Cursor getAllFavorites() {

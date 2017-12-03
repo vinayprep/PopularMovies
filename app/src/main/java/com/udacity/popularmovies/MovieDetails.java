@@ -10,9 +10,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int SEARCH_LOADER = 22;
     private static final String SEARCH_QUERY_URL_EXTRA = "query";
+    private static final String SCROLL_POSITION = "scroll";
     String poster_path;
     String original_title;
     String overview;
@@ -69,7 +72,9 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     RecyclerView trailers;
     String[] columnName = new String[1];
     String[] columnValue = new String[1];
-
+    int scrollPos = 0;
+    View targetView;
+    NestedScrollView linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +179,28 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
             }
         }
 
+        linearLayout = (NestedScrollView) findViewById(R.id.activity_movie_details);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SCROLL_POSITION)) {
+                scrollPos = Integer.parseInt(savedInstanceState.getString(SCROLL_POSITION));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayout.scrollTo(0, scrollPos);
+                    }
+                }, 200);
+                Log.d("ADebugTag", "scrollPos..................." + scrollPos);
+            }
+        }
+
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SCROLL_POSITION, String.valueOf(linearLayout.getScrollY()));
     }
 
     private Cursor getAllFavorites() {

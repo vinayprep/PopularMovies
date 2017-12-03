@@ -2,6 +2,7 @@ package com.udacity.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -27,13 +28,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import utils.FavoriteContract;
-import utils.FavoritesDbHelper;
 import utils.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String SCROLL_POSITION = "scroll";
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     private static final String SORTING = "sorting";
+    private static final String SCROLL_POSITION = "scroll";
     MovieAdapter movieAdapter;
     ArrayList<Movies> mModel;
     ArrayList<Movies> mModelTemp;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     String[] columnValue;
     StaggeredGridLayoutManager layoutManager;
     int scrollPos = 0;
+    String sortBy;
+    SharedPreferences sharedpreferences;
+    String sorting;
     private SQLiteDatabase mDb;
     private Parcelable recyclerViewState;
 
@@ -59,27 +63,10 @@ public class MainActivity extends AppCompatActivity {
         movies.setLayoutManager(layoutManager);
         mModel = new ArrayList<>();
         mModelTemp = new ArrayList<>();
-        if (isOnline()) {
-            if (NetworkUtils.POPULAR_TEXT.equals(getIntent().getStringExtra("sortBy")) ||
-                    getIntent().getStringExtra("sortBy") == null ||
-                    "".equals(getIntent().getStringExtra("sortBy"))) {
-                URL url = NetworkUtils.generateURL(NetworkUtils.POPULAR_TEXT);
-                new MainAsyncClass().execute(url);
-            } else if (NetworkUtils.TOP_RATED_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
-                URL url = NetworkUtils.generateURL(NetworkUtils.TOP_RATED_TEXT);
-                new MainAsyncClass().execute(url);
-            } else if (NetworkUtils.FAVORITES_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
-                URL url = NetworkUtils.generateURL(NetworkUtils.POPULAR_TEXT);
-                new MainAsyncClass().execute(url);
-            }
-        } else {
-            Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_LONG).show();
-        }
-
-
+        sharedpreferences = getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        sorting = sharedpreferences.getString("sorting", NetworkUtils.POPULAR_TEXT);
+        Log.d("ADebugTag", "sorting............" + sorting);
         columnName[0] = FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID;
-        FavoritesDbHelper dbHelper = FavoritesDbHelper.getInstance(this);
-        mDb = dbHelper.getWritableDatabase();
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(SCROLL_POSITION)) {
                 scrollPos = Integer.parseInt(savedInstanceState.getString(SCROLL_POSITION));
@@ -89,11 +76,46 @@ public class MainActivity extends AppCompatActivity {
                         movies.getLayoutManager().scrollToPosition(scrollPos);
                     }
                 }, 200);
-                Log.d("ADebugTag", "scrollPos..................." + scrollPos);
             }
+        } else {
+            scrollPos = Integer.parseInt(sharedpreferences.getString("scrollPostion", "0"));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    movies.getLayoutManager().scrollToPosition(scrollPos);
+                }
+            }, 200);
         }
+        if (isOnline()) {
+            if (NetworkUtils.POPULAR_TEXT.equals(sorting) ||
+                    sorting == null ||
+                    "".equals(sorting)) {
+                URL url = NetworkUtils.generateURL(NetworkUtils.POPULAR_TEXT);
+                new MainAsyncClass().execute(url);
+            } else if (NetworkUtils.TOP_RATED_TEXT.equals(sorting)) {
+                URL url = NetworkUtils.generateURL(NetworkUtils.TOP_RATED_TEXT);
+                new MainAsyncClass().execute(url);
+            } else if (NetworkUtils.FAVORITES_TEXT.equals(sorting)) {
+                URL url = NetworkUtils.generateURL(NetworkUtils.POPULAR_TEXT);
+                new MainAsyncClass().execute(url);
+                url = NetworkUtils.generateURL(NetworkUtils.TOP_RATED_TEXT);
+                new MainAsyncClass().execute(url);
+            }
+        } else {
+            Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_LONG).show();
+        }
+
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        int into[] = new int[2];
+        layoutManager.findFirstVisibleItemPositions(into);
+        editor.putString("scrollPostion", String.valueOf(into[0]));
+        editor.apply();
+    }
 
     public boolean isOnline() {
         ConnectivityManager cm =
@@ -112,24 +134,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
         switch (item.getItemId()) {
             case R.id.popular:
+                editor.putString("sorting", NetworkUtils.POPULAR_TEXT);
+                editor.commit();
                 Intent intentPop = new Intent(this, MainActivity.class);
-                intentPop.putExtra("sortBy", NetworkUtils.POPULAR_TEXT);
                 startActivity(intentPop);
-                finish();
                 return true;
             case R.id.top_rated:
+                editor.putString("sorting", NetworkUtils.TOP_RATED_TEXT);
+                editor.commit();
                 Intent intentTR = new Intent(this, MainActivity.class);
-                intentTR.putExtra("sortBy", NetworkUtils.TOP_RATED_TEXT);
                 startActivity(intentTR);
-                finish();
                 return true;
             case R.id.favorites:
+                editor.putString("sorting", NetworkUtils.FAVORITES_TEXT);
+                editor.commit();
                 Intent intentFV = new Intent(this, MainActivity.class);
-                intentFV.putExtra("sortBy", NetworkUtils.FAVORITES_TEXT);
                 startActivity(intentFV);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -153,27 +177,6 @@ public class MainActivity extends AppCompatActivity {
         int into[] = new int[2];
         layoutManager.findFirstVisibleItemPositions(into);
         outState.putString(SCROLL_POSITION, String.valueOf(into[0]));
-        recyclerViewState = layoutManager.onSaveInstanceState();//save
-        outState.putParcelable("statekey", recyclerViewState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            recyclerViewState = savedInstanceState.getParcelable("statekey");
-        }
-    }
-
-    //
-//
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (recyclerViewState != null) {
-            layoutManager.onRestoreInstanceState(recyclerViewState);
-        }
-        Log.d("ADebugTag", "SCROLL..");
     }
 
     private Cursor getAllFavorites() {
@@ -198,23 +201,23 @@ public class MainActivity extends AppCompatActivity {
             try {
                 mModel.addAll(Arrays.asList(NetworkUtils.getPosterImage(response)));
 
-                if (NetworkUtils.FAVORITES_TEXT.equals(getIntent().getStringExtra("sortBy"))) {
-                    mModelTemp.clear();
+                if (NetworkUtils.FAVORITES_TEXT.equals(sorting)) {
                     columnValue = new String[1];
                     String movieId = null;
                     for (int i = 0; i < mModel.size(); i++) {
                         columnValue[0] = mModel.get(i).getId();
                         Cursor cursor = getAllFavorites();
+                        cursor.moveToFirst();
                         if (cursor.getCount() > 0) {
-                            cursor.moveToFirst();
                             movieId = cursor.getString(cursor.getColumnIndex(FavoriteContract.FavoriteEntry.COLUMN_MOVIE_ID));
-                        }
-                        if (mModel.get(i).getId().equals(movieId)) {
-                            mModelTemp.add(mModel.get(i));
+                            if (mModel.get(i).getId().equals(movieId)) {
+                                mModelTemp.add(mModel.get(i));
+                            }
                         }
                     }
                     mModel.clear();
-                    mModel = mModelTemp;
+                    mModel.addAll(mModelTemp);
+                    mModelTemp.clear();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
